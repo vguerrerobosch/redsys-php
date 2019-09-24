@@ -4,6 +4,18 @@ namespace Vguerrerobosch\Redsys;
 
 class Webhook
 {
+    public static $content_type = 'application/x-www-form-urlencoded';
+    
+    public static function setContentType($content_type)
+    {
+        self::$content_type = $content_type;
+    }
+
+    public static function getContentType()
+    {
+        return self::$content_type;
+    }
+
     /**
      * Verifies the signature sent by Redsys. Throws an
      * Exception\SignatureVerificationException exception if the verification fails for
@@ -14,16 +26,16 @@ class Webhook
      * @throws Exception\SignatureVerificationException if the verification fails.
      * @return bool
      */
-    public static function verifySignature($payload, $content_type, $secret)
+    public static function verifySignature($payload, $secret)
     {
-        if ($content_type == 'application/x-www-form-urlencoded') {
+        if (self::$content_type == 'application/x-www-form-urlencoded') {
             $signature = $payload['Ds_Signature'];
             $params = $payload['Ds_MerchantParameters'];
     
             $data = self::decodeMerchantParameters($params);
 
             $order = $data['Ds_Order'];
-        } elseif ($content_type == 'text/xml; charset=utf-8') {
+        } elseif (self::$content_type == 'text/xml; charset=utf-8') {
             if (!preg_match("/<Request.*>(.*)<\/Request>/", $payload, $params) ||
                 !preg_match("/<Ds_Order>(.*)<\/Ds_Order>/", $payload, $order) ||
                 !preg_match("/<Signature>(.*)<\/Signature>/", $payload, $signature)) {
@@ -39,7 +51,7 @@ class Webhook
 
         $expectedSignature = Redsys::computeSignature($params, $order, $secret);
 
-        if ($content_type == 'application/x-www-form-urlencoded') {
+        if (self::$content_type == 'application/x-www-form-urlencoded') {
             $expectedSignature = strtr($expectedSignature, '+/', '-_');
         }
 
@@ -69,23 +81,27 @@ class Webhook
         return json_decode(json_encode($xml->Request), true);
     }
 
-    public function getData($payload, $content_type)
+    public function getData($payload)
     {
-        $content_type = isset($content_type) ? $content_type : 'application/x-www-form-urlencoded';
-
-        if ($content_type == 'application/x-www-form-urlencoded') {
+        if (self::$content_type == 'application/x-www-form-urlencoded') {
             return self::decodeMerchantParameters($payload['Ds_MerchantParameters']);
-        } elseif ($content_type == 'text/xml; charset=utf-8') {
+        } elseif (self::$content_type == 'text/xml; charset=utf-8') {
             return self::xmlToArray($payload);
         } else {
-            throw new \Exception('Invalid payload');
+            throw new \Exception('Not supported Content Type');
         }
     }
 
     public static function response($order_id = null, $secret = null)
     {
-        if ($content_type == 'text/xml; charset=utf-8') {
-            return self::createSoapResponse($order_id, $secret);
+        if (self::$content_type == 'text/xml; charset=utf-8') {
+            $response = self::createSoapResponse($order_id, $secret);
+
+            header('Content-type', 'text/xml; charset="utf-8"');
+            header('Cache-Control', 'no-cache, must-revalidate');
+            header('Content-length', strlen($response));
+
+            return $response;
         }
 
         return 'Webook handled';
