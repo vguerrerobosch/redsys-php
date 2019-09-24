@@ -30,11 +30,11 @@ You can create a payment request
 
 ```php
 use Vguerrerobosch\Redsys\Redsys;
-use Vguerrerobosch\Redsys\PaymentRequest as RedsysPaymentRequest;
+use Vguerrerobosch\Redsys\PaymentRequest;
 
 Redsys::setApiKey('sq7HjrUOBfKmC576ILgskD5srU870gJ7');
 
-$payment_request = RedsysPaymentRequest::create([
+$payment_request = PaymentRequest::create([
     'amount' => 2000,
     'order' => microtime(),
     'merchant_code' => 999008881,
@@ -61,7 +61,6 @@ $payment_request->signature; // the calculated signature
 $payment_request->signature_version // currently HMAC_SHA256_V1
 ```
 
-
 ### Handling webhooks
 
 The very first thing should be verifing the signature of the request:
@@ -70,11 +69,16 @@ The very first thing should be verifing the signature of the request:
 use Vguerrerobosch\Redsys\Webook as RedsysWebhook;
 use Vguerrerobosch\Redsys\Exception\SignatureVerificationException;
 
-$payload = @file_get_contents('php://input');
+$content_type = $_SERVER['CONTENT_TYPE'];
+
+$payload = $content_type == 'application/x-www-form-urlencoded' ?
+    $_POST :
+    @file_get_contents('php://input');
+
 $secret_key = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7';
 
 try {
-    RedsysWebhook::verifySignature($payload, $secret_key);
+    RedsysWebhook::verifySignature($payload, $content_type, $secret_key);
 } catch (SignatureVerificationException $exception) {
     http_response_code(403);
     die;
