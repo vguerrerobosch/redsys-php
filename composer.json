@@ -1,0 +1,12 @@
+{
+    "name": "vguerrerobosch/redsys-php",
+    "description": "Unofficial yet better PHP library for the Redsys API.",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Victor Guerrero Bosch",
+            "email": "vguerrerobosch@gmail.com"
+        }
+    ],
+    "require": {}
+}
