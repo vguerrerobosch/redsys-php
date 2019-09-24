@@ -26,7 +26,12 @@ namespace Vguerrerobosch\Redsys;
  */
 class PaymentRequest
 {
-    public static function create($params)
+    public $url;
+    public $params;
+    public $signature;
+    public $signature_version;
+
+    protected function __construct($params)
     {
         $params = array_merge([
             'terminal' => 1,
@@ -36,23 +41,37 @@ class PaymentRequest
         ], $params);
 
         foreach ($params as $key => $value) {
+            unset($params[$key]);
             $key = 'Ds_Merchant_' . str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
-            $payload[$key] = $value;
+            $params[$key] = $value;
         }
 
-        $payload = base64_encode(json_encode($payload));
+        $this->params = base64_encode(json_encode($params));
 
-        $signature = Redsys::computeSignature(
-            $payload,
-            $params['order'],
+        $this->signature = Redsys::computeSignature(
+            $this->params,
+            $params['Ds_Merchant_Order'],
             Redsys::getApiKey()
         );
 
-        return [
-            'url' => Redsys::baseUrl() . '/sis/realizarPago',
-            'params' => $payload,
-            'signature' => $signature,
-            'signature_version' => Redsys::VERSION,
-        ];
+        $this->signature_version = Redsys::VERSION;
+
+        $this->url = Redsys::baseUrl() . '/sis/realizarPago';
+    }
+
+    public function form($submit = null)
+    {
+        $sumbit = isset($submit) ? $submit : true;
+
+        $script = "<script>window.onload = function(){document.forms['redsys_payment_request_form'].submit();}</script>";
+
+        return '<form action="' . $this->url . '" method="POST" name="redsys_payment_request_form"><input type="hidden" name="Ds_MerchantParameters" value="' . $this->params . '"/><input type="hidden" name="Ds_Signature" value="' . $this->signature . '"/><input type="hidden" name="Ds_SignatureVersion" value="' . $this->signature_version . '"/><input type="submit"></form>' . ($sumbit ? $script : '');
+    }
+
+    public static function create($params)
+    {
+        $obj = new static($params);
+
+        return $obj;
     }
 }

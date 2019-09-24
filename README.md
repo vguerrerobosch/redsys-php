@@ -46,23 +46,24 @@ $payment_request = RedsysPaymentRequest::create([
 
 then you can build the form like:
 
-```html
-<form action="<?php $payment_request['url'] ?>" method="POST" name="payment_form">
-    <input type="hidden" name="Ds_MerchantParameters" value="<?php $payment_request['params'] ?>"/>
-    <input type="hidden" name="Ds_Signature" value="<?php $payment_request['signature'] ?>"/>
-    <input type="hidden" name="Ds_SignatureVersion" value="<?php $payment_request['version'] ?>"/>
-    <input type="submit" value="Submit">
-</form>
-<script>
-window.onload = function(){
-  document.forms['payment_form'].submit();
-}
-</script>
+```php
+$sumbit_onload = false; // default true
+
+$payment_request->form($submit_onload);
 ```
+
+or you may access the properties directly:
+
+```php
+$payment_request->url; // the Redsys endpoint
+$payment_request->params; // the encoded parameters
+$payment_request->signature; // the calculated signature
+$payment_request->signature_version // currently HMAC_SHA256_V1
+```
+
 
 ### Handling webhooks
 
-#### Verify Signature
 The very first thing should be verifing the signature of the request:
 
 ```php
