@@ -70,14 +70,13 @@ The very first thing should be verifing the signature of the request:
 use Vguerrerobosch\Redsys\Webook as RedsysWebhook;
 use Vguerrerobosch\Redsys\Exception\SignatureVerificationException;
 
-$payload = file_get_contents('php://input');
+$payload = @file_get_contents('php://input');
 $secret_key = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7';
 
 try {
     RedsysWebhook::verifySignature($payload, $secret_key);
 } catch (SignatureVerificationException $exception) {
-    header('HTTP/1.0 403 Forbidden');
-    echo $exception->getMessage();
+    http_response_code(403);
     die;
 }
 ```
