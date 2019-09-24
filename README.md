@@ -66,10 +66,12 @@ $payment_request->signature_version // currently HMAC_SHA256_V1
 The very first thing should be verifing the signature of the request:
 
 ```php
-use Vguerrerobosch\Redsys\Webook as RedsysWebhook;
+use Vguerrerobosch\Redsys\Webook as Webhook;
 use Vguerrerobosch\Redsys\Exception\SignatureVerificationException;
 
 $content_type = $_SERVER['CONTENT_TYPE'];
+
+Webhook::setContentType($content_type); // defaults to application/x-www-form-urlencoded
 
 $payload = $content_type == 'application/x-www-form-urlencoded' ?
     $_POST :
@@ -78,15 +80,22 @@ $payload = $content_type == 'application/x-www-form-urlencoded' ?
 $secret_key = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7';
 
 try {
-    RedsysWebhook::verifySignature($payload, $content_type, $secret_key);
+    Webhook::verifySignature($payload, $secret_key);
 } catch (SignatureVerificationException $exception) {
     http_response_code(403);
     die;
 }
 ```
 
-then use get the data of the response:
+then get the data from the response payload and update the order status on your database or whatever needs to be done.
 
 ```php
-$data = RedsysWebhook::getData($payload);
+$data = Webhook::getData($payload);
+```
+
+and finally return the response (required for SOAP)
+
+```php
+echo Webhook::response($order_id, $secret_key);
+die;
 ```
