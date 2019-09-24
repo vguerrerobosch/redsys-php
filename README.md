@@ -1,4 +1,8 @@
+**THIS PACKAGE IS STILL IN DEVELOPMENT, DO NOT USE YET**
+
 # Redsys PHP bindings
+![Packagist Version](https://img.shields.io/packagist/v/vguerrerobosch/redsys-php?style=flat-square)
+![GitHub](https://img.shields.io/github/license/vguerrerobosch/stripe-php)
 
 This unofficial Redsys PHP library provides convenient access to the Redsys API from applications written in the PHP language.
 
@@ -11,12 +15,12 @@ PHP 5.6.0 and later.
 You can install the library via [Composer](http://getcomposer.org/). Run the following command:
 
 ```bash
-composer require vguerrerobosch/redsys-php
+composer require Vguerrerobosch/redsys-php
 ```
 
 ## Manual Installation
 
-If you do not wish to use Composer, you can download the [latest release](https://github.com/vguerrerobosch/redsys-php/releases). Then, to use the bindings, include the `init.php` file.
+If you do not wish to use Composer, you can download the [latest release](https://github.com/Vguerrerobosch/redsys-php/releases). Then, to use the bindings, include the `init.php` file.
 
 ```php
 require_once('/path/to/stripe-php/init.php');
