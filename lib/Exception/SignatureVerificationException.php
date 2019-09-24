@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\Redsys\Exception;
+namespace Vguerrerobosch\Redsys\Exception;
 
 class SignatureVerificationException extends \Exception
 {

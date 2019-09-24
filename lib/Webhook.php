@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\Redsys;
+namespace Vguerrerobosch\Redsys;
 
 class Webhook
 {
