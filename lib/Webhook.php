@@ -88,7 +88,7 @@ class Webhook
         } elseif (self::$content_type == 'text/xml; charset=utf-8') {
             return self::xmlToArray($payload);
         } else {
-            throw new \Exception('Not supported Content Type');
+            throw new \Exception('Not supported content type');
         }
     }
 
@@ -97,9 +97,9 @@ class Webhook
         if (self::$content_type == 'text/xml; charset=utf-8') {
             $response = self::createSoapResponse($order_id, $secret);
 
-            header('Content-type: text/xml; charset="utf-8"');
+            header('Content-Type: text/xml; charset="utf-8"');
             header('Cache-Control: no-cache, must-revalidate');
-            header('Content-length: ' . strlen($response));
+            header('Content-Length: ' . strlen($response));
 
             return $response;
         }
