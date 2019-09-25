@@ -3,6 +3,7 @@
 # Redsys PHP bindings
 ![Packagist Version](https://img.shields.io/packagist/v/vguerrerobosch/redsys-php?style=flat-square)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+![Travis (.org)](https://img.shields.io/travis/vguerrerobosch/redsys-php)
 
 This unofficial Redsys PHP library provides convenient access to the Redsys API from applications written in the PHP language.
 
