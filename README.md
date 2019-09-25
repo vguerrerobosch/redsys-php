@@ -110,5 +110,5 @@ Genuine card information cannot be used in test mode. Instead, use the following
 
 Card number | Description
 ------------|------------
-4548 8120 4940 0004 | Visa charge succeeded
-5576 4400 2278 8500 | MasterCard charge is declined
+`4548 8120 4940 0004` | Visa charge succeeded.
+`5576 4400 2278 8500` | MasterCard charge is declined with `9551`response code.
