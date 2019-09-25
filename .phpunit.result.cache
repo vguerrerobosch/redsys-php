@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":263:{a:2:{s:7:"defects";a:1:{s:57:"Vguerrerobosch\Redsys\Test\RedsysTest::amount_is_required";i:4;}s:5:"times";a:2:{s:57:"Vguerrerobosch\Redsys\Test\RedsysTest::amount_is_required";d:0.012;s:65:"Vguerrerobosch\Redsys\Test\RedsysTest::amount_is_positive_integer";d:0;}}}

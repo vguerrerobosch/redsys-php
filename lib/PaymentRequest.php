@@ -2,6 +2,8 @@
 
 namespace Vguerrerobosch\Redsys;
 
+use Vguerrerobosch\Redsys\Exception\InvalidPaymentRequestException;
+
 /**
  * Class Redsys
  *
@@ -33,6 +35,10 @@ class PaymentRequest
 
     protected function __construct($params)
     {
+        if (!(isset($params['amount']) && is_int($params['amount']) && $params['amount'] > 0 )) {
+            throw new InvalidPaymentRequestException;
+        }
+
         $params = array_merge([
             'terminal' => 1,
             'currency' => 978,
