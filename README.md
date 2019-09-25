@@ -110,5 +110,5 @@ Genuine card information cannot be used in test mode. Instead, use the following
 
 Card number | Description
 ------------|------------
-<div style="font-family:monospace">4548<span style="display:inline-block; width:8px;"></span>8120<span style="display:inline-block; width:8px;"></span>4940<span style="display:inline-block; width:8px;"></span>0004</div> | Visa charge succeeded.
+4548<span style="display:inline-block; width:8px;"></span>8120<span style="display:inline-block; width:8px;"></span>4940<span style="display:inline-block; width:8px;"></span>0004 | Visa charge succeeded.
 5576<span style="display:inline-block; width:8px;"></span>4400<span style="display:inline-block; width:8px;"></span>2278<span style="display:inline-block; width:8px;"></span>8500 | MasterCard charge is declined with `9551` response code.
