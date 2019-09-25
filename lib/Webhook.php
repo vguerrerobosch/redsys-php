@@ -5,7 +5,7 @@ namespace Vguerrerobosch\Redsys;
 class Webhook
 {
     public static $content_type = 'application/x-www-form-urlencoded';
-    
+
     public static function setContentType($content_type)
     {
         self::$content_type = $content_type;
@@ -31,7 +31,7 @@ class Webhook
         if (self::$content_type == 'application/x-www-form-urlencoded') {
             $signature = $payload['Ds_Signature'];
             $params = $payload['Ds_MerchantParameters'];
-    
+
             $data = self::decodeMerchantParameters($params);
 
             $order = $data['Ds_Order'];
@@ -81,7 +81,7 @@ class Webhook
         return json_decode(json_encode($xml->Request), true);
     }
 
-    public function getData($payload)
+    public static function getData($payload)
     {
         if (self::$content_type == 'application/x-www-form-urlencoded') {
             return self::decodeMerchantParameters($payload['Ds_MerchantParameters']);
@@ -97,9 +97,9 @@ class Webhook
         if (self::$content_type == 'text/xml; charset=utf-8') {
             $response = self::createSoapResponse($order_id, $secret);
 
-            header('Content-type', 'text/xml; charset="utf-8"');
-            header('Cache-Control', 'no-cache, must-revalidate');
-            header('Content-length', strlen($response));
+            header('Content-type: text/xml; charset="utf-8"');
+            header('Cache-Control: no-cache, must-revalidate');
+            header('Content-length: ' . strlen($response));
 
             return $response;
         }
