@@ -15,7 +15,7 @@ PHP 5.6.0 and later.
 You can install the library via [Composer](http://getcomposer.org/). Run the following command:
 
 ```bash
-composer require Vguerrerobosch/redsys-php
+composer require vguerrerobosch/redsys-php
 ```
 
 ## Manual Installation
@@ -103,3 +103,12 @@ and finally return the response (required for SOAP)
 echo Webhook::response($order_id, $secret_key);
 die;
 ```
+
+## Testing
+### Test card numbers
+Genuine card information cannot be used in test mode. Instead, use the following test card numbers, a valid expiration date in the future, and any random CVC number, to create a successful payment.
+
+Card number | Description
+------------|------------
+4548 8120 4940 0004 | Visa charge succeeded
+5576 4400 2278 8500 | MasterCard charge is declined
