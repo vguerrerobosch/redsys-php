@@ -24,7 +24,7 @@ composer require vguerrerobosch/redsys-php
 If you do not wish to use Composer, you can download the [latest release](https://github.com/Vguerrerobosch/redsys-php/releases). Then, to use the bindings, include the `init.php` file.
 
 ```php
-require_once('/path/to/stripe-php/init.php');
+require_once('/path/to/redsys-php/init.php');
 ```
 
 ## Getting Started
