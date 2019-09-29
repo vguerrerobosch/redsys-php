@@ -18,7 +18,7 @@ class WebhookUrlEncoded implements WebhookContentType
         return strtr($expectedSignature, '+/', '-_');
     }
 
-    public function getData(string $payload): array
+    public function getData($payload): array
     {
         $data = $payload['Ds_MerchantParameters'];
 
@@ -29,7 +29,7 @@ class WebhookUrlEncoded implements WebhookContentType
         return json_decode($data, true);
     }
 
-    public function reponse($order_id, $secret): string
+    public function response($order_id, $secret): string
     {
         return 'Webook handled';
     }

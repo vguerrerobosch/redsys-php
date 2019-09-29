@@ -19,7 +19,7 @@ class WebhookSoap implements WebhookContentType
         return Redsys::computeSignature($params, $order, $secret);
     }
 
-    public function getData(string $payload): array
+    public function getData($payload): array
     {
         if (!preg_match('/<!\[CDATA\[(.*)\]\]>/', $payload, $matches)) {
             throw new \Exception('Invalid payload');
