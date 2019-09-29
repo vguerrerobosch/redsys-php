@@ -3,6 +3,7 @@
 namespace Vguerrerobosch\Redsys;
 
 use Alcohol\ISO4217;
+use League\ISO3166\Exception\OutOfBoundsException;
 use League\ISO3166\ISO3166;
 use Vguerrerobosch\Redsys\WebhookSoap;
 use Vguerrerobosch\Redsys\WebhookUrlEncoded;
@@ -70,10 +71,14 @@ class Webhook
         $currency = (new ISO4217())->getByNumeric($data['currency']);
         $data['currency'] = strtolower($currency['alpha3']);
 
-        $country = (new ISO3166)->numeric($data['card_country']);
-        $data['card_country'] = strtolower($country['alpha2']);
+        try {
+            $country = (new ISO3166)->numeric($data['card_country']);
+            $data['card_country'] = strtolower($country['alpha2']);
+        } catch (OutOfBoundsException $e) {
+            // simply leave it as it is
+        }
 
-        $data['card_brand'] = CardBrands::find($data['card_brand']);
+        $data['card_brand'] = CardBrands::find($data['card_brand']) ?? null;
 
         $data['secure_payment'] = (bool) $data['secure_payment'];
 
