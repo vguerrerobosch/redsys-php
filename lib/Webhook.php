@@ -9,7 +9,7 @@ class Webhook
 {
     public static $content_type;
 
-    public function __contruct($content_type)
+    public static function setContentType($content_type)
     {
         switch ($content_type) {
             case 'application/x-www-form-urlencoded':
