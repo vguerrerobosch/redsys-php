@@ -41,7 +41,7 @@ Redsys::setApiKey('sq7HjrUOBfKmC576ILgskD5srU870gJ7');
 
 $payment_request = PaymentRequest::create([
     'amount' => 2000,
-    'order' => microtime(),
+    'order' => time(),
     'merchant_code' => 999008881,
     'merchant_url' => 'https://941a2b9e.ngrok.io/webhook',
     'url_ok' => 'http://redsys-php.test/ok',
@@ -71,7 +71,7 @@ $payment_request->signature_version // currently HMAC_SHA256_V1
 The very first thing should be verifing the signature of the request:
 
 ```php
-use Vguerrerobosch\Redsys\Webook as Webhook;
+use Vguerrerobosch\Redsys\Webhook as Webhook;
 use Vguerrerobosch\Redsys\Exception\SignatureVerificationException;
 
 $content_type = $_SERVER['CONTENT_TYPE'];
