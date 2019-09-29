@@ -4,7 +4,7 @@ namespace Vguerrerobosch\Redsys;
 
 class WebhookSoap implements WebhookContentType
 {
-    public function getExpectedSignatrue($payload, $secret): string
+    public function getExpectedSignature($payload, $secret): string
     {
         if (!preg_match("/<Request.*>(.*)<\/Request>/", $payload, $params) ||
             !preg_match("/<Ds_Order>(.*)<\/Ds_Order>/", $payload, $order) ||
