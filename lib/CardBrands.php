@@ -5,13 +5,13 @@ namespace Vguerrerobosch\Redsys;
 class CardBrands
 {
     public static $brands = [
-        1 => 'Visa',
-        2 => 'MasterCard',
-        6 => 'Diners',
-        7 => 'Privada',
-        8 => 'Amex',
-        9 => 'JCB',
-        22 => 'UPI',
+        1 => 'visa',
+        2 => 'mastercard',
+        6 => 'diners',
+        7 => 'privada',
+        8 => 'amex',
+        9 => 'jcb',
+        22 => 'upi',
     ];
 
     public static function find($code)

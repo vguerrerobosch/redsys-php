@@ -55,7 +55,11 @@ class Webhook
             $key = str_replace('Ds_', '', $key);
             $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
             $key = str_replace('__', '_', $key);
-            $data[$key] = is_array($value) ?? empty($value) ? null : $value;
+
+            $value = is_array($value) && empty($value) ? null : $value;
+            $value = $value === '' ? null : $value;
+
+            $data[$key] = $value;
         }
 
         $created_at = \DateTime::createFromFormat('d/m/Y H:i', "{$data['date']} {$data['hour']}");
@@ -70,6 +74,8 @@ class Webhook
         $data['card_country'] = strtolower($country['alpha2']);
 
         $data['card_brand'] = CardBrands::find($data['card_brand']);
+
+        $data['secure_payment'] = (bool) $data['secure_payment'];
 
         ksort($data);
 
