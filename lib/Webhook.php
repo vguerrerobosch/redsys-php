@@ -71,6 +71,8 @@ class Webhook
         unset($data['date']);
         unset($data['hour']);
 
+        $data['amount'] = (int) $data['amount'];
+
         $currency = (new ISO4217())->getByNumeric($data['currency']);
         $data['currency'] = strtolower($currency['alpha3']);
 
