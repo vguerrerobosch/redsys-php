@@ -51,6 +51,6 @@ class Webhook
 
     public static function response($order_id = null, $secret = null)
     {
-        return self::$content_type->getData($payload);
+        return self::$content_type->response($order_id, $secret);
     }
 }
