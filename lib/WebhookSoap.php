@@ -27,7 +27,15 @@ class WebhookSoap implements WebhookContentType
 
         $xml = simplexml_load_string($matches[1]);
 
-        return json_decode(json_encode($xml->Request), true);
+        $data = json_decode(json_encode($xml->Request), true);
+
+        $data = ['date' => $data['Fecha'], 'hour' => $data['Hora']] + $data;
+
+        unset($data['Fecha']);
+        unset($data['Hora']);
+        unset($data['@attributes']);
+
+        return $data;
     }
 
     public function response($order_id, $secret): string

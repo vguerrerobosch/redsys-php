@@ -46,7 +46,24 @@ class Webhook
 
     public static function getData($payload)
     {
-        return self::$content_type->getData($payload);
+        $data = self::$content_type->getData($payload);
+
+        foreach ($data as $key => $value) {
+            unset($data[$key]);
+            $key = str_replace('Ds_', '', $key);
+            $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
+            $key = str_replace('__', '_', $key);
+            $data[$key] = $value;
+        }
+
+        $created_at = \DateTime::createFromFormat('d/m/Y H:i', "{$data['date']} {$data['hour']}");
+
+        $data = ['created_at' => $created_at->format('Y-m-d H:i:s')] + $data;
+
+        unset($data['date']);
+        unset($data['hour']);
+
+        return $data;
     }
 
     public static function response($order_id = null, $secret = null)
