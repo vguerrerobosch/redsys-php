@@ -2,7 +2,7 @@
 
 namespace Vguerrerobosch\Redsys;
 
-class WebhookUrlEncoded implements WebookContentType
+class WebhookUrlEncoded implements WebhookContentType
 {
     public function getExpectedSignature($payload, $secret)
     {
