@@ -57,6 +57,7 @@ class Webhook
             $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
             $key = str_replace('__', '_', $key);
 
+            $value = is_array($value) ? array_filter(array_map('trim', $value)) : $value;
             $value = is_array($value) && empty($value) ? null : $value;
             $value = $value === '' ? null : $value;
 
