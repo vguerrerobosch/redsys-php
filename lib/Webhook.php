@@ -69,6 +69,8 @@ class Webhook
         $country = (new ISO3166)->numeric($data['card_country']);
         $data['card_country'] = strtolower($country['alpha2']);
 
+        $data['card_brand'] = CardBrands::find($data['card_brand']);
+
         ksort($data);
 
         return $data;
