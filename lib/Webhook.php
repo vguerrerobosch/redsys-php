@@ -3,6 +3,7 @@
 namespace Vguerrerobosch\Redsys;
 
 use Alcohol\ISO4217;
+use League\ISO3166\Exception\InvalidArgumentException;
 use League\ISO3166\Exception\OutOfBoundsException;
 use League\ISO3166\ISO3166;
 use Vguerrerobosch\Redsys\WebhookSoap;
@@ -75,7 +76,7 @@ class Webhook
         try {
             $country = (new ISO3166)->numeric($data['card_country'] ?? null);
             $data['card_country'] = strtolower($country['alpha2']);
-        } catch (OutOfBoundsException $e) {
+        } catch (OutOfBoundsException | InvalidArgumentException $e) {
             $data['card_country'] = null;
         }
 
