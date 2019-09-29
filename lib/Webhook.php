@@ -60,6 +60,7 @@ class Webhook
 
             $value = is_array($value) ? array_filter(array_map('trim', $value)) : $value;
             $value = is_array($value) && empty($value) ? null : $value;
+            $value = is_string($value) ? trim($value) : $value;
             $value = $value === '' ? null : $value;
 
             $data[$key] = $value;
