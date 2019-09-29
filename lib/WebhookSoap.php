@@ -30,7 +30,7 @@ class WebhookSoap implements WebhookContentType
         return json_decode(json_encode($xml->Request), true);
     }
 
-    public function reponse($order_id, $secret): string
+    public function response($order_id, $secret): string
     {
         $response = '<Response Ds_Version="0.0"><Ds_Response_Merchant>OK</Ds_Response_Merchant></Response>';
 
