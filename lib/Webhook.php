@@ -72,15 +72,17 @@ class Webhook
         $data['currency'] = strtolower($currency['alpha3']);
 
         try {
-            $country = (new ISO3166)->numeric($data['card_country']);
+            $country = (new ISO3166)->numeric($data['card_country'] ?? null);
             $data['card_country'] = strtolower($country['alpha2']);
         } catch (OutOfBoundsException $e) {
-            // simply leave it as it is
+            $data['card_country'] = null;
         }
 
         $data['card_brand'] = CardBrands::find($data['card_brand'] ?? null);
 
         $data['secure_payment'] = (bool) $data['secure_payment'];
+
+        $data['error_code'] = $data['error_code'] ?? null;
 
         ksort($data);
 
