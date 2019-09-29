@@ -2,6 +2,8 @@
 
 namespace Vguerrerobosch\Redsys;
 
+use Alcohol\ISO4217;
+use League\ISO3166\ISO3166;
 use Vguerrerobosch\Redsys\WebhookSoap;
 use Vguerrerobosch\Redsys\WebhookUrlEncoded;
 
@@ -53,15 +55,21 @@ class Webhook
             $key = str_replace('Ds_', '', $key);
             $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
             $key = str_replace('__', '_', $key);
-            $data[$key] = $value;
+            $data[$key] = is_array($value) ?? empty($value) ? null : $value;
         }
 
         $created_at = \DateTime::createFromFormat('d/m/Y H:i', "{$data['date']} {$data['hour']}");
-
-        $data = ['created_at' => $created_at->format('Y-m-d H:i:s')] + $data;
-
+        $data['created_at'] = $created_at->format('Y-m-d H:i:s');
         unset($data['date']);
         unset($data['hour']);
+
+        $currency = (new ISO4217())->getByNumeric($data['currency']);
+        $data['currency'] = strtolower($currency['alpha3']);
+
+        $country = (new ISO3166)->numeric($data['card_country']);
+        $data['card_country'] = strtolower($country['alpha2']);
+
+        ksort($data);
 
         return $data;
     }

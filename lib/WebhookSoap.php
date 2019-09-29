@@ -29,7 +29,8 @@ class WebhookSoap implements WebhookContentType
 
         $data = json_decode(json_encode($xml->Request), true);
 
-        $data = ['date' => $data['Fecha'], 'hour' => $data['Hora']] + $data;
+        $data['date'] = $data['Fecha'];
+        $data['hour'] = $data['Hora'];
 
         unset($data['Fecha']);
         unset($data['Hora']);
