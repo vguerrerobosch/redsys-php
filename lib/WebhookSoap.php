@@ -4,7 +4,7 @@ namespace Vguerrerobosch\Redsys;
 
 class WebhookSoap implements WebhookContentType
 {
-    public function getExpectedSignatrue($payload, $secret)
+    public function getExpectedSignatrue($payload, $secret): string
     {
         if (!preg_match("/<Request.*>(.*)<\/Request>/", $payload, $params) ||
             !preg_match("/<Ds_Order>(.*)<\/Ds_Order>/", $payload, $order) ||
@@ -19,7 +19,7 @@ class WebhookSoap implements WebhookContentType
         return Redsys::computeSignature($params, $order, $secret);
     }
 
-    public function getData(string $payload)
+    public function getData(string $payload): array
     {
         if (!preg_match('/<!\[CDATA\[(.*)\]\]>/', $payload, $matches)) {
             throw new \Exception('Invalid payload');
@@ -30,7 +30,7 @@ class WebhookSoap implements WebhookContentType
         return json_decode(json_encode($xml->Request), true);
     }
 
-    public function reponse($order_id, $secret)
+    public function reponse($order_id, $secret): string
     {
         $response = '<Response Ds_Version="0.0"><Ds_Response_Merchant>OK</Ds_Response_Merchant></Response>';
 

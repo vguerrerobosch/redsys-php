@@ -4,7 +4,7 @@ namespace Vguerrerobosch\Redsys;
 
 class WebhookUrlEncoded implements WebhookContentType
 {
-    public function getExpectedSignature($payload, $secret)
+    public function getExpectedSignature($payload, $secret): string
     {
         $signature = $payload['Ds_Signature'];
         $params = $payload['Ds_MerchantParameters'];
@@ -18,7 +18,7 @@ class WebhookUrlEncoded implements WebhookContentType
         return strtr($expectedSignature, '+/', '-_');
     }
 
-    public function getData(string $payload)
+    public function getData(string $payload): array
     {
         $data = $payload['Ds_MerchantParameters'];
 
@@ -29,7 +29,7 @@ class WebhookUrlEncoded implements WebhookContentType
         return json_decode($data, true);
     }
 
-    public function reponse($order_id, $secret)
+    public function reponse($order_id, $secret): string
     {
         return 'Webook handled';
     }
