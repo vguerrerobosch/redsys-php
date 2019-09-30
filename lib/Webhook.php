@@ -95,7 +95,7 @@ class Webhook
         if ($data['response'] >= 0 && $data['response'] <= 99) {
             $data['status'] = 'succeeded';
         } else {
-            $data['stauts'] = 'failed';
+            $data['status'] = 'failed';
         }
 
         ksort($data);
