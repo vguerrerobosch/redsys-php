@@ -89,7 +89,7 @@ class Webhook
 
         $data['error_code'] = $data['error_code'] ?? null;
 
-        if ($data['response'] >= 0 && $data['response'] <= 99 ) {
+        if ($data['response'] >= 0 && $data['response'] <= 99) {
             $data['status'] = 'succeeded';
         } else {
             $data['stauts'] = 'failed';
