@@ -4,17 +4,24 @@ namespace Vguerrerobosch\Redsys;
 
 class WebhookSoap implements WebhookContentType
 {
+    public function getSignature($payload): string
+    {
+        if (!preg_match("/<Signature>(.*)<\/Signature>/", $payload, $signature)) {
+            throw new \Exception('Invalid payload');
+        }
+
+        return $signature[1];
+    }
+
     public function getExpectedSignature($payload, $secret): string
     {
         if (!preg_match("/<Request.*>(.*)<\/Request>/", $payload, $params) ||
-            !preg_match("/<Ds_Order>(.*)<\/Ds_Order>/", $payload, $order) ||
-            !preg_match("/<Signature>(.*)<\/Signature>/", $payload, $signature)) {
+            !preg_match("/<Ds_Order>(.*)<\/Ds_Order>/", $payload, $order)) {
             throw new \Exception('Invalid payload');
         }
 
         $params = $params[0];
         $order = $order[1];
-        $signature = $signature[1];
 
         return Redsys::computeSignature($params, $order, $secret);
     }

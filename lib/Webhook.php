@@ -39,6 +39,8 @@ class Webhook
      */
     public static function verifySignature($payload, $secret)
     {
+        $signature = self::$content_type->getSignature($payload);
+
         $expectedSignature = self::$content_type->getExpectedSignature($payload, $secret);
 
         if ($signature != $expectedSignature) {

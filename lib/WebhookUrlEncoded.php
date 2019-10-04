@@ -4,9 +4,14 @@ namespace Vguerrerobosch\Redsys;
 
 class WebhookUrlEncoded implements WebhookContentType
 {
+    public function getSignature($payload): string
+    {
+        return $payload['Ds_Signature'];;
+    }
+
     public function getExpectedSignature($payload, $secret): string
     {
-        $signature = $payload['Ds_Signature'];
+
         $params = $payload['Ds_MerchantParameters'];
 
         $data = $this->getData($payload);
