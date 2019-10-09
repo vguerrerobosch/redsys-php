@@ -86,6 +86,7 @@ class Webhook
         }
 
         $data['card_brand'] = CardBrands::find($data['card_brand'] ?? null);
+        $data['card_number'] = $data['card_number'] ?? null;
 
         $data['secure_payment'] = (bool) $data['secure_payment'];
         $data['response'] = (int) $data['response'];
