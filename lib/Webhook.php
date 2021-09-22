@@ -78,8 +78,10 @@ class Webhook
         $currency = (new ISO4217())->getByNumeric($data['currency']);
         $data['currency'] = strtolower($currency['alpha3']);
 
+        $data['card_country'] = str_pad($data['card_country'] ?? null, 3, '0', STR_PAD_LEFT);
+
         try {
-            $country = (new ISO3166)->numeric($data['card_country'] ?? null);
+            $country = (new ISO3166)->numeric($data['card_country']);
             $data['card_country'] = strtolower($country['alpha2']);
         } catch (OutOfBoundsException | InvalidArgumentException $e) {
             $data['card_country'] = null;
