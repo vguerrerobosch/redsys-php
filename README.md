@@ -1,5 +1,3 @@
-**THIS PACKAGE IS STILL IN DEVELOPMENT, DO NOT USE YET**
-
 # Redsys PHP bindings
 ![Packagist Version](https://img.shields.io/packagist/v/vguerrerobosch/redsys-php?style=flat-square)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
